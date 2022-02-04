@@ -49,7 +49,7 @@ k = 2
 #  각 유저가 신고한 ID를 key value로 묶기
 # 목표
 # 신고한 아이디 리스트값
-# {"muzi": ["frodo", "neo"], "apeach": ["frodo"], "frodo": ["neo"], "apeach": ["muzi"]}
+# {'muzi': ['frodo', 'neo'], 'frodo': ['neo'], 'apeach': ['frodo', 'muzi'], 'neo': []}
 # 신고 당한 아이디 명수
 # {'frodo': 2, 'neo': 2, 'muzi': 1}
 # 결과
@@ -57,29 +57,47 @@ k = 2
 
 answer = [0]*len(id_list)
 id_dict = {i:[] for i in id_list}
-report_name_list = []
 penalty = []
 # for i, data in set(enumerate(reports)):
 for i in set(reports):
     name = i.split(" ")[0]
     report_name = i.split(" ")[1]
-    print(name, report_name)
-    penalty.append(report_name)
+    # penalty.append(report_name)
 
-    # {"muzi": ["frodo", "neo"], "apeach": ["frodo"], "frodo": ["neo"], "apeach": ["muzi"]}
-    id_dict[name].append(report_name)
+    # {'muzi': ['frodo', 'neo'], 'frodo': ['neo'], 'apeach': ['frodo', 'muzi'], 'neo': []}
+    # {'muzi': ['apeach'], 'frodo': ['muzi', 'apeach'], 'apeach': [], 'neo': ['frodo', 'muzi']}
+    # {신고당한놈: [신고한놈들]}
+    id_dict[report_name].append(name)
 
 # k만큼 신고당한 인원만
 # {'frodo', 'neo'}
-# 
-penalty = set([i for i in penalty if penalty.count(i) >= k])
-print(penalty)
+# print(id_dict)
+# penalty = set([i for i in penalty if penalty.count(i) >= k])
 
 for key, value in id_dict.items():
-    for p in penalty:
-        if p in value:
-            answer[id_list.index(key)] += 1
-print(answer)
+    # print(value)
+    if len(value) >= k:
+        for v in value:
+            answer[id_list.index(v)] += 1
+# print(answer)
+
+
+def solution(id_list, report, k):
+    answer = [0] * len(id_list)    
+    reports = {x : 0 for x in id_list}
+
+    # 신고당한놈을 기준으로 dict에 값추가
+    for r in set(report):
+        reports[r.split()[1]] += 1
+    
+    for r in set(report):
+        # 신고당한놈이 K값 보다 크면
+        if reports[r.split()[1]] >= k:
+            # idList에서 신고한놈 위치에 +1
+            answer[id_list.index(r.split()[0])] += 1
+
+    return answer
+solution(id_list, reports, k)
 '''
 for key, value in id_dict.items():
     id_dict[key] = list(set(id_dict[key]))
