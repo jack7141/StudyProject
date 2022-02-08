@@ -12,6 +12,7 @@ def dfs(x,y):
         dfs(x + 1, y)
         dfs(x, y + 1)
         return True
+
     return False
 
 
@@ -23,7 +24,7 @@ graph = []
 for i in range(n):
     graph.append(list(map(int, input())))
 
-
+print(graph)
 # 모든 노드에 대해서 값 채우기
 result = 0
 for i in range(n):

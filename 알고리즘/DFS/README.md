@@ -1,4 +1,4 @@
-
+<!-- 탐색부분 율속단계 -->
 # DFS(Depth-First Search)/BFS(Breadth-First Search)
 
 * 탐색이란 많은 양의 데이터 중에서 원하는 데이터를 찾는 과정을 말한다.
