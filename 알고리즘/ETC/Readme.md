@@ -17,3 +17,9 @@
     => 팩토리얼, 제곱근, 최대공약수, 삼각함수, 파이(PI)와 같은 상수 포함
 
 * test = [[1], [2]] print(*test) *를 찍어주면 unpacking이 됨 좋다좋아!
+
+* 몫과 나머지 - divmod
+
+EX) a = 7
+    b = 5
+    print(*divmod(a, b))
