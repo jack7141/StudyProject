@@ -52,3 +52,39 @@ data = ['A', 'B', 'C']
 result = list(combinations_with_replacement(data,2))
 # 결과: [('A', 'A'), ('A', 'B'), ('A', 'C'), ('B', 'B'), ('B', 'C'), ('C', 'C')]
 print(result)
+
+############################################################################
+# product(iterator1, iterator2, .. , [repeat=1]) :
+# 데카르트 곱, 중복된 for문으로 표현 가능
+from itertools import product
+
+iterator1 = [1, 2, 3]
+iterator2 = ['A', 'B', 'C']
+
+print(list(product(iterator1, iterator2)))
+# >>> [(1, 'A'), (1, 'B'), (1, 'C'), (2, 'A'), (2, 'B'), (2, 'C'), (3, 'A'), (3, 'B'), (3, 'C')]
+
+print([(i,j) for i in iterator1 for j in iterator2])
+# >>> [(1, 'A'), (1, 'B'), (1, 'C'), (2, 'A'), (2, 'B'), (2, 'C'), (3, 'A'), (3, 'B'), (3, 'C')]
+ 
+############################################################################
+#중복 순열(순서 o, 중복 o)
+from itertools import product
+
+iterator = ['A','B','C','D','E']
+
+print(list(product(iterator, repeat = 1)))
+# >>> [('A',), ('B',), ('C',), ('D',), ('E',)]
+
+print(list(product(iterator, repeat = 2)))
+# >>> [
+# ('A', 'A'), ('A', 'B'), ('A', 'C'), 
+# ('A', 'D'), ('A', 'E'), ('B', 'A'), 
+# ('B', 'B'), ('B', 'C'), ('B', 'D'), 
+# ('B', 'E'), ('C', 'A'), ('C', 'B'), 
+# ('C', 'C'), ('C', 'D'), ('C', 'E'), 
+# ('D', 'A'), ('D', 'B'), ('D', 'C'), 
+# ('D', 'D'), ('D', 'E'), ('E', 'A'), 
+# ('E', 'B'), ('E', 'C'), ('E', 'D'), 
+# ('E', 'E')
+# ]
