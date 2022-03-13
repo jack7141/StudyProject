@@ -51,3 +51,23 @@ sorted_score = sorted(score, key=lambda x: (-x[1], x[2], -x[3], x[0]))
 
 for i in sorted_score:
     print(i[0])
+
+###############################################################################
+import sys
+
+N = int(sys.stdin.readline())
+Guitar_list = []
+for _ in range(N):
+  Guitar_list.append(input())
+
+def sum_number(x):
+  result = 0
+  for i in x:
+    if i.isdigit():
+      result += int(i)
+  return result
+
+# 람다 + 내가만든 함수를 통해서도 정렬이 가능!
+sorted_Guitar_list = sorted(Guitar_list, key=lambda x: (len(x), sum_number(x), x))
+for i in sorted_Guitar_list:
+  print(i)

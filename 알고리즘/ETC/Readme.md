@@ -23,3 +23,13 @@
 EX) a = 7
     b = 5
     print(*divmod(a, b))
+
+
+# 백준 입력받을때
+## input() vs sys.stdin.readline()
+
+* sys를 사용해서 처리하는것이 훨씬빠름
+
+import sys
+
+N = int(sys.stdin.readline())    
