@@ -16,7 +16,9 @@
   <header>
     {% include "partials/nav.html" %}
   </header>
-  <body>
+  <body class="w-screen">
         {% block content %}{% endblock %}
+
+        {% include "partials/footer.html" %}
   </body>
 </html>
