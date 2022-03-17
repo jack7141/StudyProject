@@ -10,3 +10,13 @@ class login_view(View):
 
     def post(self, request):
         pass
+
+class sign_up_view(View):
+    """
+    로그인 기능 구현
+    """
+    def get(self, request):
+        pass
+
+    def post(self, request):
+        pass
