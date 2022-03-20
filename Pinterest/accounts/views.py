@@ -57,12 +57,28 @@ def log_out(request):
     logout(request)
     return redirect("core:CoreHomeView")
 
-class sign_up_view(View):
+class sign_up_view(FormView):
     """
     로그인 기능 구현
     """
-    def get(self, request):
-        pass
+    template_name = "accounts/signup.html"
+    form_class = forms.sign_up_form
+    # redirect reverse_lazy로 대체
+    success_url = reverse_lazy("core:CoreHomeView")
+    initial = {
+        "first_name" : "test",
+        "last_name" : "test",
+        "email" :"ghl92479@gmail.com"
+    }
 
-    def post(self, request):
-        pass
+    def form_valid(self, form):
+        """
+        유효성 검사가 완료된 후 저장시키고 로그인까지 시킨다.
+        """
+        form.save()
+        email = form.cleaned_data["email"]
+        password = form.cleaned_data["password"]
+        user = authenticate(self.request, username=email, password=password)
+        if user is not None:
+            login(self.request, user)
+        return super().form_valid(form)
