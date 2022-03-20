@@ -5,6 +5,11 @@
 {% endblock page_title %}
 
 {% block content %}
+<form method="POST" action="{% url "accounts:login" %}" >
+    {{forms.as_p}}
+    <button>login</button>
+</form>
+
     <section class="flex justify-center items-center h-screen bg-gray-800">
         <div class="max-w-md w-full justify-center items-center bg-gray-900 rounded p-6 space-y-4">
             <div class="mb-4">

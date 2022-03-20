@@ -44,5 +44,11 @@
             </svg>
         </a>
       </nav>
+
+      {% if user.is_authenticated %}
+        <a href="{% url "accounts:logout" %}">log out</a>
+      {% else %}
+        <a href="{% url "accounts:login" %}">log in</a>
+      {% endif %}
+
       
-  
