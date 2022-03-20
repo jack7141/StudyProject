@@ -1,9 +1,9 @@
 from django.urls import path
 # from cafes import views as CafeViews
-from . import views
+from arts.views import HomeView
 
 app_name = "core"
 
 urlpatterns = [
-    path("", views.HomeView.as_view(), name="CoreHomeView"),
+    path("", HomeView.as_view(), name="CoreHomeView"),
 ]
