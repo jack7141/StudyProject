@@ -3,23 +3,18 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <!--  static에서 css추가  -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-    <link rel="stylesheet" href="css/bootstrap,min.css">
-    <title>{% block page_name %}{% endblock page_name %}| Nbnb</title>
-  </head>
+
+    {% include "head.html" %}
+    <title>{% block page_name %}{% endblock page_name %}atelier</title>
   <header>
     {% include "partials/nav.html" %}
   </header>
+
   <body class="max-w-full">
     
         {% block content %}{% endblock %}
 
         {% include "partials/footer.html" %}
   </body>
+  
 </html>
