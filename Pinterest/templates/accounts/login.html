@@ -5,11 +5,6 @@
 {% endblock page_title %}
 
 {% block content %}
-<form method="POST" action="{% url "accounts:login" %}" >
-    {% csrf_token %}
-    {{form.as_p}}
-    <button>Login</button>
-</form>
 
     <section class="flex justify-center items-center h-screen bg-gray-800">
         <div class="max-w-md w-full justify-center items-center bg-gray-900 rounded p-6 space-y-4">
@@ -21,10 +16,10 @@
             <form method="POST" action="{% url "accounts:login" %}" class="space-y-4 ">
                     {% csrf_token %}
                 <div>
-                    <input class="w-full p-4 text-sm bg-gray-50 focus:outline-none border border-gray-200 rounded text-gray-600" type="email" placeholder="Email">
+                    <input class="w-full p-4 text-sm bg-gray-50 focus:outline-none border border-gray-200 rounded text-gray-600" name="email" type="email" placeholder="Email">
                 </div>
                 <div>
-                    <input class="w-full p-4 text-sm bg-gray-50 focus:outline-none border border-gray-200 rounded text-gray-600" type="password" placeholder="Password">
+                    <input class="w-full p-4 text-sm bg-gray-50 focus:outline-none border border-gray-200 rounded text-gray-600" name="password" type="password" placeholder="Password">
                 </div>
                 <div class="flex items-center justify-between">
                     <div class="flex flex-row items-center">

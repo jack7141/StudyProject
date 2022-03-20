@@ -16,8 +16,8 @@ class login_form(forms.Form):
         """
         * 사용자 ID, Password 유효성 검사 
         """
-        email = self.cleaned_data["email"]
-        password = self.cleaned_data["password"]
+        email = self.cleaned_data.get("email")
+        password = self.cleaned_data.get("password")
         try:
             user = models.User.objects.get(username=email)
             
@@ -85,12 +85,12 @@ class sign_up_form(forms.ModelForm):
         fields = ("first_name", "last_name", "email")
 
     password = forms.CharField(widget=forms.PasswordInput)
-    password1 = forms.CharField(widget=forms.PasswordInput, label="Confirm Password")\
+    confirm_password = forms.CharField(widget=forms.PasswordInput, label="Confirm Password")
 
     # 페이지 에러가 생겨서 Email 유효성 체크는 그대로 유지
     # unique constraint failed auth_user.username 
     def clean_email(self):
-        email = self.cleaned_data["email"]
+        email = self.cleaned_data.get("email")
         try:
             models.User.objects.get(email=email)
             raise forms.ValidationError("기존 사용자가 있습니다.")
@@ -100,10 +100,11 @@ class sign_up_form(forms.ModelForm):
 
     # 내가 유효성을 검사하고자하는 태그?를 clean뒤에 붙여줘야지 사용가능함
     def clean_confirm_password(self):
-        password = self.cleaned_data["password"]
+        password = self.cleaned_data.get("password")
 
         # 모델?에서 가져오는 password가 아닐시 get으로 가져와야함
         confirm_password = self.cleaned_data.get("confirm_password")
+        print(password, confirm_password)
         if password != confirm_password:
             raise forms.ValidationError("비밀번호가 동일하지 않습니다.")
         else:

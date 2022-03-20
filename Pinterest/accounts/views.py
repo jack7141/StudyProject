@@ -23,8 +23,9 @@ class login_view(FormView):
 
     # View로 구현한 if form.is_valid():를 아래 함수로 대체
     def form_valid(self, form):
-        email = form.cleaned_data["email"]
-        password = form.cleaned_data["password"]
+        email = form.cleaned_data.get("email")
+        password = form.cleaned_data.get("password")
+
         user = authenticate(self.request, username=email, password=password)
         if user is not None:
             login(self.request, user)
@@ -82,8 +83,8 @@ class sign_up_view(FormView):
         유효성 검사가 완료된 후 저장시키고 로그인까지 시킨다.
         """
         form.save()
-        email = form.cleaned_data["email"]
-        password = form.cleaned_data["password"]
+        email = form.cleaned_data.get("email")
+        password = form.cleaned_data.get("password")
         # User 인증 함수. 자격 증명이 유효한 경우 User 객체를, 그렇지 않은 경우 None을 반환
         user = authenticate(self.request, username=email, password=password)
         if user is not None:
