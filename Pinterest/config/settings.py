@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-xyfhjgjryxmkbdy(%htaqv$&njww5f^g7df5p5--i1eugaqo6v
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -108,7 +108,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = "Asia/Seoul"
 
 USE_I18N = True
 
@@ -139,5 +139,6 @@ EMAIL_HOST_PASSWORD = os.environ.get("NAVER_PASSWORD")
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
+MEDIA_ROOT = os.path.join(BASE_DIR, "uploads")
 
-
+MEDIA_URL = "/media/"

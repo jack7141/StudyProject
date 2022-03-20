@@ -18,13 +18,22 @@ class User(AbstractUser):
         (GENDER_FEMALE, "Female"),
     )
 
+    LOGIN_GMAIL = "Gmail"
+    LOGING_KAKAO = "kakao"
 
-    avatar = models.ImageField(blank=True)
+    LOGIN_CHOICES = (
+        (LOGIN_GMAIL, "Gmail"),
+        (LOGING_KAKAO, "Kakao"),
+    )
+
+    avatar = models.ImageField(upload_to="avatars", blank=True)
     gender = models.CharField(choices=GENDER_CHOICES, max_length=10, blank=True)
     bio = models.TextField(blank=True)
     email_verified = models.BooleanField(default=False)
     email_secret = models.CharField(max_length=150, default="", blank=True)
-
+    login_method = models.CharField(
+        max_length=50, choices=LOGIN_CHOICES, default=LOGIN_GMAIL
+    )
     def verify_email(self):
         if self.email_verified is False:
             secret = uuid.uuid4().hex[:20]
@@ -41,4 +50,5 @@ class User(AbstractUser):
                 fail_silently=False,
                 html_message=html_message,
             )
+            self.save()
         return
