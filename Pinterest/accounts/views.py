@@ -78,7 +78,10 @@ class sign_up_view(FormView):
         form.save()
         email = form.cleaned_data["email"]
         password = form.cleaned_data["password"]
+        # User 인증 함수. 자격 증명이 유효한 경우 User 객체를, 그렇지 않은 경우 None을 반환
         user = authenticate(self.request, username=email, password=password)
         if user is not None:
             login(self.request, user)
+        # user모델 이메일 함수 사용
+        user.verify_email()
         return super().form_valid(form)
