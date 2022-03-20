@@ -1,3 +1,14 @@
 from django.db import models
 
-# Create your models here.
+
+class TimeStampedModel(models.Model):
+    '''
+    * 모델 생성 관리 모델
+    '''
+    # auto_now_add는 내가 새로 생성하면 그때 기록을해준다.
+    created = models.DateTimeField(auto_now_add=True)
+    # auto_now는 내가 생성할때마다 기록을해준다.
+    updated = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        abstract = True
