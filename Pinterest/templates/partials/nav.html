@@ -20,9 +20,10 @@
  
  
           {% if user.is_authenticated %}      
-            <a class="block w-1/2 px-3 py-2 mx-1 rounded text-center text-sm bg-gray-600 font-medium text-white leading-5 hover:bg-blue-600 md:mx-2 md:w-auto" href="{% url "accounts:logout" %}">log out</a>
+          <a class="block w-1/2 px-3 py-2 mx-1 rounded text-center text-sm bg-gray-600 font-medium text-white leading-5 hover:bg-blue-600 md:mx-2 md:w-auto" href="{% url "arts:viewCreate" %}">CREATE</a>
+            <a class="block w-1/2 px-3 py-2 mx-1 rounded text-center text-sm bg-gray-600 font-medium text-white leading-5 hover:bg-blue-600 md:mx-2 md:w-auto" href="{% url "accounts:logout" %}">LOG OUT</a>
           {% else %}
-            <a class="block w-1/2 px-3 py-2 mx-1 rounded text-center text-sm bg-gray-600 font-medium text-white leading-5 hover:bg-blue-600 md:mx-2 md:w-auto" href="{% url "accounts:login" %}">log in</a>
+            <a class="block w-1/2 px-3 py-2 mx-1 rounded text-center text-sm bg-gray-600 font-medium text-white leading-5 hover:bg-blue-600 md:mx-2 md:w-auto" href="{% url "accounts:login" %}">LOG IN</a>
           {% endif %}
           </div>
         </div>

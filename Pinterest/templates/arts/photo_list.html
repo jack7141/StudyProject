@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_title %}
+Home
+{% endblock page_title %}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha512-U6K1YLIFUWcvuw5ucmMtT9HH4t0uz3M366qrF5y4vnyH6dgDzndlcGvH/Lz5k8NFh80SN95aJ5rqGZEdaQZ7ZQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
+<script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+<script src="{% static 'js/infinite.min.js' %}"></script>
+{% block content %}
+<style>
+    .container div {
+        width: 280px;
+        background-color: antiquewhite;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 8px;
+    }
+    
+    .container img { width: 100%; border-radius: 8px; }
+
+    .hover\:grow {
+        transition: all 0.3s;
+        transform: scale(1);
+    }
+    
+    .hover\:grow:hover {
+        transform: scale(1.02);
+    }
+</style>
+
+<div class="container max-w-full mt-10 ">
+    {% for art in arts  %}
+    <div>
+        <a href="{% url 'arts:viewDetail' art.pk  %}">
+            <img class="hover:grow hover:shadow-lg" src="{{ art.file.url }}">
+        </a>
+    </div>
+    {% endfor %}
+
+</div>
+
+
+<div class="flex items-center justify-center mx-auto container">
+    <h5>
+           {% if page_obj.has_previous %}
+                <a href="?page={{page_obj.previous_page_number}}" class="text-teal-500">
+                    <i class="fas fa-arrow-left fa-lg"></i>
+                </a>
+            {% endif %}
+
+            <span class="mx-3 font-medium text-lg">{{page_obj.number}} of {{page_obj.paginator.num_pages}}</span>
+
+            {% if page_obj.has_next  %}
+                <a href="?page={{page_obj.next_page_number}}" class="text-teal-500">
+                    <i class="fas fa-arrow-right fa-lg"></i>
+                </a>
+            {% endif %}
+    </h5>
+</div>
+
+
+<script src="{% static 'js/magic_grid.js' %}"></script>
+{% endblock content %}

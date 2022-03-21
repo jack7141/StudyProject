@@ -3,30 +3,28 @@ from django.utils.safestring import mark_safe
 from . import models
 
 @admin.register(models.Art)
-class RoomAdmin(admin.ModelAdmin):
+class ArtAdmin(admin.ModelAdmin):
 
     """ Room Admin Definition """
 
     fieldsets = (
         (
             "Basic Info",
-            {"fields": ("title", "description", "artist")},
+            {"fields": ("title", "description", "artist", "file")},
         ),
     )
 
     list_display = (
         "artist",
-        "count_photos",
+        'get_thumbnail',
     )
 
-    def count_photos(self, obj):
-        return obj.photos.count()
 
 
-@admin.register(models.Photo)
-class PhotoAdmin(admin.ModelAdmin):
+# @admin.register(models.Photo)
+# class PhotoAdmin(admin.ModelAdmin):
 
-    """ Phot Admin Definition """
+#     """ Phot Admin Definition """
 
-    list_display = ("__str__", "get_thumbnail")
+#     list_display = ("__str__", "get_thumbnail",)
 
