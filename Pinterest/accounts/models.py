@@ -34,6 +34,7 @@ class User(AbstractUser):
     login_method = models.CharField(
         max_length=50, choices=LOGIN_CHOICES, default=LOGIN_GMAIL
     )
+    
     def verify_email(self):
         if self.email_verified is False:
             secret = uuid.uuid4().hex[:20]

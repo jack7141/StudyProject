@@ -17,9 +17,9 @@ class login_view(FormView):
     form_class = forms.login_form
     # redirect reverse_lazy로 대체
     success_url = reverse_lazy("core:CoreHomeView")
-    initial = {
-        "email":"ghl92479@gmail.com"
-    }
+    # initial = {
+    #     "email":"ghl92479@gmail.com"
+    # }
 
     # View로 구현한 if form.is_valid():를 아래 함수로 대체
     def form_valid(self, form):
@@ -96,7 +96,8 @@ class sign_up_view(FormView):
 
 def complete_verification(request, key):
     try:
-        # 회원가입시 verifi_email()이 통과한 후 저장된 email_secret과 일치하는 key가 있으면,
+        # 회원가입시 보내진 링크를 통해 접속했을 경우 실행!
+        # 회원가입시 verify_email()이 통과한 후 저장된 email_secret과 일치하는 key가 있으면,
         # 이메일 검증 T로 바꾸고,
         # 검증되었으니, 이메일 시크릿키를 삭제한다.
         user = models.User.objects.get(email_secret=key)
