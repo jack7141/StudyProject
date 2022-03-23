@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'arts',
     'bootstrap4',
     'reviews',
+    'django_seed',
 ]
 
 MIDDLEWARE = [

@@ -88,7 +88,7 @@ class ArtshotosView(DetailView, MultipleObjectMixin):
 def likes(request, id):
     art = get_object_or_404(Art, pk=id)
     if request.user.is_authenticated:
-        if art.artist in art.like_users.all():
+        if request.user in art.like_users.all():
             art.like_users.remove(request.user)
         else:
             art.like_users.add(request.user)

@@ -21,12 +21,8 @@ class Art(TimeStampedModel):
     def __str__(self):
         return str(self.title)
 
-
     def get_thumbnail(self):
         return mark_safe(f'<img width="50px" src="{self.file.url}" />')
 
     def total_like(self):
         return self.like_users.count()
-
-    def get_users(self):
-        return "\n".join([p.like_users for p in self.like_users.all()])
