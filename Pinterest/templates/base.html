@@ -4,16 +4,18 @@
 <!DOCTYPE html>
 <html lang="ko">
 
-    {% include "head.html" %}
+  {% include "head.html" %}
   
   <header>
     {% include "partials/nav.html" %}
   </header>
-
+  
   <body class="max-w-full bg-gray-800">
     
-        {% block content %}{% endblock %}
-
+    {% block content %}{% endblock %}
+    
+    
+        {% include "partials/messages.html" %}
         {% include "partials/footer.html" %}
   </body>
   

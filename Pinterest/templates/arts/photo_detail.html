@@ -29,14 +29,43 @@
           <p class="text-base leading-normal text-white dark:text-white mt-2">ARTIST - {{ target_art_work.artist }}</p>
           <p class="text-base leading-normal text-white dark:text-white mt-2">{{ target_art_work.description }}</p>
           <p class="text-3xl font-medium text-white dark:text-white mt-8 md:mt-10"></p>
+          <i class="fa-solid fa-circle-heart"></i>
           <div class="flex items-center flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-6 lg:space-x-8 mt-8 md:mt-16">
-            <a href="" class="w-full md:w-2/5 text-center text-center rounded-2xl border-b-2 border-b-gray-300 bg-white py-2.5 px-4 font-bold text-blue-700 ring-2 ring-gray-300 hover:bg-gray-200 active:translate-y-[0.125rem] active:border-b-gray-200">좋아요</a>
+            {% if request.user in target_art_work.like_users.all %}
+              <a href="{% url 'arts:likes' target_art_work.pk %}" class="w-full md:w-2/5 text-center text-center rounded-2xl border-b-2 border-b-gray-300 bg-white py-2.5 px-4 font-bold text-blue-700 ring-2 ring-gray-300 hover:bg-gray-200 active:translate-y-[0.125rem] active:border-b-gray-200">             
+                좋아요
+                <i class="fa fa-heart text-red-500"></i>
+                <i class="ml-2">{{ target_art_work.like_users.count }}</i>
+              </a>
+              {% else %}
+              <a href="{% url 'arts:likes' target_art_work.pk %}" class="w-full md:w-2/5 text-center text-center rounded-2xl border-b-2 border-b-gray-300 bg-white py-2.5 px-4 font-bold text-blue-700 ring-2 ring-gray-300 hover:bg-gray-200 active:translate-y-[0.125rem] active:border-b-gray-200">             
+                좋아요
+                <i class="fa fa-heart"></i>
+                <i class="ml-2">{{ target_art_work.like_users.count }}</i>
+              </a>
+              {% endif %}
+
             {% if user.pk == target_art_work.artist.pk %}   
-                <a href="{% url "arts:viewUpdate" target_art_work.pk %}" class="w-full md:w-2/5 text-center text-center rounded-2xl border-b-2 border-b-gray-300 bg-white py-2.5 px-4 font-bold text-blue-700 ring-2 ring-gray-300 hover:bg-gray-200 active:translate-y-[0.125rem] active:border-b-gray-200">수정하기</a>
+              <a href="{% url "arts:viewUpdate" target_art_work.pk %}" class="w-full md:w-2/5 text-center text-center rounded-2xl border-b-2 border-b-gray-300 bg-white py-2.5 px-4 font-bold text-blue-700 ring-2 ring-gray-300 hover:bg-gray-200 active:translate-y-[0.125rem] active:border-b-gray-200">수정하기</a>
             {% endif %}
           </div>
-          </div>
         </div>
+      </div>
+      {% for review in target_art_work.reviews.all  %}
+      <div class="border-section">
+          <div class="mb-3 flex">
+              <div>
+                  {% include "mixins/user_avatar.html" with target_user=review.user h_and_w='w-10 h-10' text='text-xl' %}
+              </div>
+              {% comment %} <div class="flex flex-col ml-5"> {% endcomment %}
+                  <span class="font-medium">{{review.user.first_name}}</span>
+                  <span class="font-medium">{{review.is_like}}</span>
+                  <span class="text-sm text-gray-500">{{review.created|date:'F Y'}}</span>
+              </div>
+          </div>
+          <p>{{review.review}}</p>
+      </div>
+  {% endfor %}  
       </div>
     </div>
   </div>

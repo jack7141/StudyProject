@@ -1,15 +1,15 @@
 from django.shortcuts import render, redirect
 from django.views import View
-from django.views.generic import FormView
+from django.views.generic import FormView, DetailView, UpdateView
 from django.urls import reverse_lazy
-
+from django.contrib.auth.views import PasswordChangeView
 from accounts import models
 from . import forms
 from django.contrib.auth import authenticate, login, logout
 import requests
 import os
 from django.core.files.base import ContentFile
-
+from django.contrib import messages
 
 class login_view(FormView):
 
@@ -61,6 +61,7 @@ class login_view(FormView):
         
 
 def log_out(request):
+    messages.info(request, f"See you later")
     logout(request)
     return redirect("core:CoreHomeView")
 
@@ -93,6 +94,29 @@ class sign_up_view(FormView):
         user.verify_email()
         return super().form_valid(form)
 
+class profile_view(DetailView):
+
+    model = models.User
+    template_name = "accounts/user_detail.html"
+    context_object_name = "target_user"
+
+
+class profile_update_view(UpdateView):
+
+    model = models.User
+    template_name = "accounts/user_update.html"
+    fields = (
+        "first_name",
+        "last_name",
+        "avatar",
+        "gender",
+        "bio",
+    )
+    def get_object(self, queryset=None):
+        return self.request.user
+
+class profile_update_password_view(PasswordChangeView):
+    template_name = "accounts/user_update_password.html"
 
 def complete_verification(request, key):
     try:
@@ -151,12 +175,12 @@ def google_callback(request):
                 'access_token': access_token
             }
         )
-        print(profile_request.json())
+
         profile_json = profile_request.json()
         google_account = profile_json["email"]
 
         if google_account is None:
-            raise GoogleException()
+            raise GoogleException("Please also give me your email")
         nickname = profile_json["name"]
         profile_image = profile_json["picture"]
         try:
@@ -179,8 +203,10 @@ def google_callback(request):
                     f"{nickname}-avatar", ContentFile(photo_request.content)
                 )
         login(request, user)
+        messages.success(request, f"Welcome back {user.first_name}")
         return redirect("core:CoreHomeView")
     except GoogleException:
+        messages.error(request, e)
         return redirect("accounts:login")    
     pass
 
@@ -217,7 +243,7 @@ def kakao_callback(request):
         kakao_email = kakao_account['email']
         kakao_profile_data = kakao_account["profile"]
         if kakao_account['email'] is None:
-            raise KakaoException()
+            raise KakaoException("Please also give me your email")
         nickname = kakao_profile_data["nickname"]
         profile_image = kakao_profile_data["profile_image_url"]
         try:
@@ -240,6 +266,8 @@ def kakao_callback(request):
                     f"{nickname}-avatar", ContentFile(photo_request.content)
                 )
         login(request, user)
+        messages.success(request, f"Welcome back {user.first_name}")
         return redirect("core:CoreHomeView")
-    except KakaoException:
+    except KakaoException as e:
+        messages.error(request, e)
         return redirect("accounts:login")

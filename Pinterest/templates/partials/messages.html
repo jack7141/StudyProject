@@ -1,0 +1,44 @@
+{% if messages %}
+    <ul class="absolute top-0 mx-auto left-0 right-0 flex justify-center">
+        {% for message in messages %}
+            <li class="message font-medium bg-gray-700 z-10 rounded-full text-white py-4 px-6 w-3/12 text-center {% if message.tags %}{{ message.tags }}{% endif %}">{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+<style>
+    @keyframes messageFadeIn {
+        0% {
+          opacity: 0;
+          transform: translateY(-50px);
+        }
+        5% {
+          opacity: 1;
+          transform: translateY(50px);
+        }
+        95% {
+          opacity: 1;
+          transform: translateY(50px);
+        }
+        100% {
+          opacity: 0;
+          transform: translateY(-50px);
+        }
+      }
+      
+      .message {
+        animation: messageFadeIn 5s ease-in-out forwards;
+        &.error {
+          @apply bg-red-600;
+        }
+        &.info {
+          @apply bg-blue-500;
+        }
+        &.success {
+          @apply bg-green-500;
+        }
+        &.warning {
+          @apply bg-yellow-400;
+        }
+      }
+</style>

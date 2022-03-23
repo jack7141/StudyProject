@@ -16,15 +16,7 @@ class ArtAdmin(admin.ModelAdmin):
 
     list_display = (
         "artist",
+        'title',
         'get_thumbnail',
     )
-
-
-
-# @admin.register(models.Photo)
-# class PhotoAdmin(admin.ModelAdmin):
-
-#     """ Phot Admin Definition """
-
-#     list_display = ("__str__", "get_thumbnail",)
 

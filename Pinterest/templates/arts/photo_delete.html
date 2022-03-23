@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_title %}
+    detail
+{% endblock page_title %}
+
+{% block content %}
+<form action="{% url 'arts:viewDelete' id=target_art_work.pk %}" method="post">
+    {% csrf_token %}
+<div class="2xl:container 2xl:mx-auto md:py-12 lg:px-20 md:px-6 py-9 px-4 ">
+    <div id="viewerBox" class="lg:p-10 md:p-6 p-4 bg-white dark:bg-gray-900 bg-gray-800">
+      <div class="mt-3 md:mt-4 lg:mt-0 flex flex-col lg:flex-row items-strech justify-center lg:space-x-8">
+        <div class="lg:w-1/2 flex justify-between items-strech px-2 py-20 md:py-6 md:px-6 lg:py-24">
+          <div class="flex items-center">
+          </div>
+          <div class="slider">
+            <div class="slide-ana lg:relative">
+              <div class="flex" style="transform: translateX(-100%)">
+                <img src="{{ target_art_work.file.url }}" alt="A black chair with wooden legs" class="w-full h-full"/>
+              </div>
+            </div>
+          </div>
+          <div class="flex items-center">
+  
+          </div>
+        </div>
+        {% comment %} text-xl font-bold text-white {% endcomment %}
+        <div class="lg:w-1/2 flex flex-col justify-center mt-7 md:mt-8 lg:mt-0 pb-8 lg:pb-0">
+          <h1 class="text-xl font-bold text-white lg:text-4xl font-semibold dark:text-white ">{{ target_art_work.title }}</h1>
+          <p class="text-base leading-normal text-white dark:text-white mt-2">ARTIST - {{ target_art_work.artist }}</p>
+          <p class="text-base leading-normal text-white dark:text-white mt-2">{{ target_art_work.description }}</p>
+          <p class="text-3xl font-medium text-white dark:text-white mt-8 md:mt-10"></p>
+          <div class="flex items-center flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-6 lg:space-x-8 mt-8 md:mt-16">
+                <button class="text-center py-3 rounded-lg font-light text-lg w-full text-white bg-red-500; bg-red-600">삭제하기</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</form>
+  
+  <style>.slider {
+    width: 100%;
+    height: 600px;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .slide-ana {
+    height: 600px;
+  }
+  
+  .slide-ana > div {
+    width: 100%;
+    height: 500px;
+    position: absolute;
+    transition: all 0.7s;
+  }
+  
+  @media (min-width: 200px) and (max-width: 639px) {
+    .slider {
+      height: 600px;
+      width: 170px;
+    }
+  }
+  </style>
+  <script>// more free and premium Tailwind CSS components at https://tailwinduikit.com/
+  let slides = document.querySelectorAll(".slide-ana>div");
+  let slideSayisi = slides.length;
+  let prev = document.getElementById("prev");
+  let next = document.getElementById("next");
+  for (let index = 0; index < slides.length; index++) {
+    const element = slides[index];
+    element.style.transform = "translateX(" + 100 * index + "%)";
+  }
+  let loop = 0 + 1000 * slideSayisi;
+  
+  function goNext() {
+    loop++;
+    for (let index = 0; index < slides.length; index++) {
+      const element = slides[index];
+      element.style.transform =
+        "translateX(" + 100 * (index - (loop % slideSayisi)) + "%)";
+    }
+  }
+  
+  function goPrev() {
+    loop--;
+    for (let index = 0; index < slides.length; index++) {
+      const element = slides[index];
+      element.style.transform =
+        "translateX(" + 100 * (index - (loop % slideSayisi)) + "%)";
+    }
+  }
+  
+  </script>
+{% endblock content %}

@@ -1,13 +1,19 @@
-from django.shortcuts import render
-from django.views.generic import ListView, DetailView, View, UpdateView, CreateView
+from django.views.generic import ListView, DetailView, UpdateView, CreateView, DeleteView, View, RedirectView
+from django.views.generic.list import MultipleObjectMixin
 from arts.models import Art
+from accounts.models import User
+from reviews.models import Review
 from django.utils.decorators import method_decorator
+from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
 from .decorators import art_ownership_required
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .forms import art_form
 from django.urls import reverse_lazy
 from django.urls import reverse
+from accounts import mixins as user_mixins
+from django.http import Http404, JsonResponse
+import json
 
 class HomeView(ListView):
     model = Art
@@ -36,13 +42,15 @@ class ArtCreateView(CreateView):
     def get_success_url(self) -> str:
         return reverse("arts:viewDetail", kwargs = {"id":self.object.pk})
 
-# @method_decorator(login_required, 'get')
-# @method_decorator(login_required, 'post')
 class ArtDetailView(DetailView):
     model = Art
     pk_url_kwarg = 'id'
     template_name = 'arts/photo_detail.html'
     context_object_name = 'target_art_work'
+    # def get_context_data(self, **kwargs):
+        # object_list = Review.objects.filter(art=self.get_object(), user=self.request.user)
+        # print(object_list)
+        # return super(ArtDetailView, self).get_context_data(object_list=object_list, **kwargs)
 
 class ArtUpdateView(UpdateView):
     model = Art
@@ -54,3 +62,34 @@ class ArtUpdateView(UpdateView):
 
     def get_success_url(self) -> str:
         return reverse("arts:viewDetail", kwargs = {"id":self.object.pk})
+
+class ArtDeleteView(DeleteView):
+    model = Art
+    pk_url_kwarg = 'id'
+    success_url = reverse_lazy("core:CoreHomeView")
+    template_name = 'arts/photo_delete.html'
+    context_object_name = 'target_art_work'
+
+class ArtshotosView(DetailView, MultipleObjectMixin):
+    """
+    내가 가지고 있는 작품 리스트
+    """
+    model = User
+    template_name = "arts/art_llist.html"
+    context_object_name = 'arts'
+
+    def get_context_data(self, **kwargs):
+        object_list = Art.objects.filter(artist=self.get_object())
+        return super(ArtshotosView, self).get_context_data(object_list=object_list, **kwargs)
+
+
+def likes(request, id):
+    art = get_object_or_404(Art, pk=id)
+    if request.user.is_authenticated:
+        if art.artist in art.like_users.all():
+            art.like_users.remove(request.user)
+        else:
+            art.like_users.add(request.user)
+        return redirect('arts:viewDetail', art.pk)
+
+    return redirect('accounts:login')
