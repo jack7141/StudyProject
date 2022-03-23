@@ -15,6 +15,8 @@ from accounts import mixins as user_mixins
 from django.http import Http404, JsonResponse
 from django.views.generic.edit import FormMixin
 from reviews.forms import review_form
+from django.contrib import messages
+
 class HomeView(ListView):
     model = Art
     paginate_by = 30
