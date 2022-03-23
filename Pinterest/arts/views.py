@@ -13,8 +13,8 @@ from django.urls import reverse_lazy
 from django.urls import reverse
 from accounts import mixins as user_mixins
 from django.http import Http404, JsonResponse
-import json
-
+from django.views.generic.edit import FormMixin
+from reviews.forms import review_form
 class HomeView(ListView):
     model = Art
     paginate_by = 30
@@ -42,11 +42,13 @@ class ArtCreateView(CreateView):
     def get_success_url(self) -> str:
         return reverse("arts:viewDetail", kwargs = {"id":self.object.pk})
 
-class ArtDetailView(DetailView):
+class ArtDetailView(DetailView, FormMixin):
     model = Art
     pk_url_kwarg = 'id'
+    form_class = review_form
     template_name = 'arts/photo_detail.html'
     context_object_name = 'target_art_work'
+    
     # def get_context_data(self, **kwargs):
         # object_list = Review.objects.filter(art=self.get_object(), user=self.request.user)
         # print(object_list)

@@ -1,0 +1,26 @@
+
+{% block content %}
+<form method="post" action="{% url 'reviews:ReviewCreate' art.pk %}" class="space-y-4 ">
+  {% csrf_token %}
+  {% comment %} {{form}} {% endcomment %}
+    <div class="w-full flex flex-col">
+      <label class="font-semibold leading-none text-gray-300">Comment</label>
+      <input type="hidden" name="art_pk" value="{{art.pk}}"/>
+      {% comment %} <input type="submit" name="comment" class="leading-none text-black-50 p-3 focus:outline-none focus:border-blue-700 mt-4 border-0 bg-gray-300 rounded"/> {% endcomment %}
+      <input type="text" name="review" class="leading-none text-black-50 p-3 focus:outline-none focus:border-blue-700 mt-4 border-0 bg-gray-300 rounded"/>
+  </div>
+ <div>
+    {% if user.is_authenticated %}    
+      <button class="w-full py-4 text-center bg-blue-600 hover:bg-blue-700 rounded text-sm font-bold text-gray-50 transition duration-200">
+        Comment
+      </button>
+    {% else %}
+    <a href="{% url "accounts:login" %}" >
+      <div class="w-full py-4 text-center bg-blue-600 hover:bg-blue-700 rounded text-sm font-bold text-gray-50 transition duration-200">
+        Comment
+      </div>
+    </a>
+      {% endif %}
+</div> 
+</form>
+{% endblock content %}

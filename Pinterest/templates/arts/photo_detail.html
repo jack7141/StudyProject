@@ -51,6 +51,9 @@
           </div>
         </div>
       </div>
+
+      {% include 'reviews/review_create.html' with art=target_art_work %}
+
       {% for review in target_art_work.reviews.all  %}
       <div class="border-section">
           <div class="mb-3 flex">

@@ -18,5 +18,6 @@ class ArtAdmin(admin.ModelAdmin):
         "artist",
         'title',
         'get_thumbnail',
+        "total_like",
     )
 

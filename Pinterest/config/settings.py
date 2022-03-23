@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'core',
     'arts',
     'bootstrap4',
-    'reviews'
+    'reviews',
 ]
 
 MIDDLEWARE = [
