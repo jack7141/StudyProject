@@ -12,4 +12,3 @@ print(math.gcd(a,b))
 
 # 최소 공배수 계산(LCM)
 print(math.lcm(a,b))
-
