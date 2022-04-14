@@ -25,7 +25,6 @@ class ModelTests(TestCase):
 
     def test_new_user_invalid_email(self):
         """check if invalid Email raises ValueError"""
-        # FIXME: AssertionError: ValueError not raised
         invaild_email = get_user_model().objects.create_user(None, 'test123')
         self.assertEqual(ValueError, type(invaild_email))
 
