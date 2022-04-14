@@ -6,30 +6,23 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, Permis
 
 class UserManager(BaseUserManager):
     
-    def create_user(self, email, password=None, **extra_fields):
-        """
-        * BaseUserManager의 create_user 메소드 오버라이드
-        :param email:
-        :param password:
-        :param extra_fileds:
-        :return:
-        """
+    def create_user(self, email, password=None, **kwargs):
+        """BaseUserManager의 create_user 메소드 오버라이드"""
         if not email:
             return ValueError('Users must have an email address')
 
-        user = self.model(email=self.normalize_email(email), **extra_fields)
+        user = self.model(email=self.normalize_email(email), **kwargs)
         user.set_password(password)
         user.save(using=self._db)
 
         return user
 
-    def create_superuser(self, email, password=None):
-        user = self.create_user(
-            email,
-            password=password,
-        )
-        user.is_admin = True
+    def create_superuser(self, email, password):
+        user = self.create_user(email, password)
+        user.is_staff = True
+        user.is_superuser = True
         user.save(using=self._db)
+
         return user
 
 class User(AbstractBaseUser, PermissionsMixin):
