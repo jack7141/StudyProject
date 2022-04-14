@@ -5,6 +5,10 @@ from django.urls import reverse
 class AdminSiteTest(TestCase):
 
     # FIXME: What is the difference between setUp() and setUpClass() in the Python unittest framework?
+    """
+    setUpClass(): 테스트가 실행되면 최초 1번만 실행됨
+    setUp(): 매 테스트마다 불러와 사용할 수 있음
+    """
     # python unittest setUp method override
     def setUp(self):
         """슈퍼유저 생성, 로그인 후 일반 유저 생성"""
