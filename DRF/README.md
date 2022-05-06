@@ -4,10 +4,8 @@
 ## Tech
 * [Django] - Python web FrameWork
 * [Django Rest Framework] - RESTFul Web API
----
 ## System Requirements
 * [python] - 3.10
----
 ## ENV File Setting
 ```sh
 DJANGO_DEBUG=true
@@ -15,7 +13,6 @@ DJANGO_SECRET_KEY='[https://djecrety.ir/]'
 
 - Django Secret Key 발급 후 ENV File에 추가
 ```
----
 ## Server RUN
 ```
 - local
