@@ -12,6 +12,7 @@ class CommandTests(TestCase):
     def test_wait_for_db_ready(self):
         with patch('django.db.utils.ConnectionHandler.__getitem__') as gi:
             gi.return_value = True
+            # command내부 wait_for_db Call
             call_command('wait_for_db')
             self.assertEqual(gi.call_count, 1)
 
