@@ -6,22 +6,34 @@
 * [Django Rest Framework] - RESTFul Web API
 ## System Requirements
 * [python] - 3.10
-## ENV File Setting
+## Secrets.json File Setting
 ```sh
-DJANGO_DEBUG=true
-DJANGO_SECRET_KEY='[https://djecrety.ir/]'
-
-- Django Secret Key 발급 후 ENV File에 추가
+{
+  "SECRET_KEY": '[https://djecrety.ir/]',
+  "DATABASES": {
+      "default": {
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": "db-table-name",
+        "USER": "root",
+        "PASSWORD": "my-password",
+        "HOST": "127.0.0.1",
+        "PORT": "3306"
+      }
+    }
+}
+- Django Secret Key 발급 후 secrets.json에 추가
 ```
+> 각 설정 파일의 정의는 `settings`폴더에 들어있으며, 비밀번호와 같은 노출되면 위험한 설정값의 경우 `프로젝트`폴더의 최상위 경로 `secrets.json` 파일에 정의 합니다.
 ## Server RUN
 ```
 - local
+$ python manage.py migrate --settings=[프로젝트명].settings.local
 $ python manage.py runserver --settings=[프로젝트명].settings.local
 
 - deploy
+$ python manage.py migrate --settings=[프로젝트명].settings.deploy
 $ python manage.py runserver --settings=[프로젝트명].settings.deploy
 ```
-> 각 설정 파일의 정의는 `settings`폴더에 들어있으며, 비밀번호와 같은 노출되면 위험한 설정값의 경우 `프로젝트`폴더의 최상위 경로 `.env` 파일에 정의 합니다.
 
 서버 실행 후, 사용하는 브라우저에 서버 주소를 입력하여 동작을 확인합니다.
 
