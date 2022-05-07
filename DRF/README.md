@@ -10,6 +10,7 @@
 ```sh
 {
   "SECRET_KEY": '[https://djecrety.ir/]',
+  "ROOT_URLCONF": "프로젝트명.urls",
   "DATABASES": {
       "default": {
         "ENGINE": "django.db.backends.mysql",

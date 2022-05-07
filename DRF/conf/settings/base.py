@@ -10,6 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
+# PROJECT COMMON
+# ------------------------------------------------------------------------------
 # Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -31,8 +33,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
-ROOT_URLCONF = 'conf.urls'
 
 TEMPLATES = [
     {
