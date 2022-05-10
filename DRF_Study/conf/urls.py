@@ -22,10 +22,15 @@ from drf_yasg import openapi
 from rest_framework import permissions
 from django.conf.urls import url
 
-router = routers.DefaultRouter()
+# URL의 끝에 붙이는 슬래시(/)를 트레일링 슬래시(trailing slash)라고 부릅니다
+"""
+https://www.google.com/example/ -> 디렉토리입니다.
+https://www.google.com/example -> 파일입니다.
+"""
+router = routers.DefaultRouter(trailing_slash=False)
 router.register('users', views.UserViewSet)
 router.register('groups', views.GroupViewSet)
-# router.register('', views.UserViewSet)
+router.register('', views.UserViewSet)
 # swagger 연결
 schema_view = get_schema_view(
     openapi.Info(
