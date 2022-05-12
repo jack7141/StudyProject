@@ -5,6 +5,7 @@ from .serializers import UserSerializer, GroupSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
+    from django_filters import rest_framework as filters
     # GenericViewSet의 역할이 중요
     """ ModelViewSet method 정리
     `list(): get',
@@ -43,8 +44,17 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
     # def get_serializer_class(self):
     #     return UserSerializer
-
+    # filter_backends = (filters.DjangoFilterBackend,)
+    # filter_fields를 사용하면, swagger상에서 던지는 파라미터를 내가 원하는걸로 수정할 수 있다.
+    # /user?email=tset@asdf.com&username=asdifjaslf
+    # https://www.django-rest-framework.org/api-guide/filtering/ -> Django Filter
+    filter_fields = ('email', 'username',)
     permission_classes = [permissions.IsAuthenticated]
+
+    # def filter_queryset(self, queryset):
+    #     queryset = queryset.filter(**self.kwargs)
+    #     queryset = super().filter_queryset(queryset=queryset)
+    #     return queryset
 
 
 class GroupViewSet(viewsets.ModelViewSet):
