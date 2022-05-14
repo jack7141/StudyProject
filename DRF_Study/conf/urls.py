@@ -20,7 +20,6 @@ from api import views
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from rest_framework import permissions
-from django.conf.urls import url
 
 # URL의 끝에 붙이는 슬래시(/)를 트레일링 슬래시(trailing slash)라고 부릅니다
 """
