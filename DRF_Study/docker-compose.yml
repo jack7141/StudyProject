@@ -33,15 +33,16 @@ services:
       - 3366:3306
     environment:
       - MYSQL_DATABASE=boards
-      - MYSQL_USER=root
-      - MYSQL_PASSWORD=1234
+      - MYSQL_USER=django
+      - MYSQL_PASSWORD=django
+      - MYSQL_ROOT_PASSWORD=django
   django:
     build:
       context: .
       dockerfile: Dockerfile
     volumes:
-      - .:/DRF
-    command: ["./manage.py", "runserver", "0:8000", "--settings=conf.settings.local"]
+      - ./:/DRF/
+    command: ["./manage.py", "runserver", "0:8000"]
     depends_on:
       - db
     restart: always

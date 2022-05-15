@@ -1,13 +1,13 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
 from rest_framework import permissions
-from .serializers import UserSerializer, GroupSerializer
-
+from .serializers import UserSerializer, GroupSerializer, ProductFilter, ReviewSerializer
+from .models import Reviews
+from rest_framework.response import Response
 
 class UserViewSet(viewsets.ModelViewSet):
-    from django_filters import rest_framework as filters
-    # GenericViewSet의 역할이 중요
-    """ ModelViewSet method 정리
+    """ GenericViewSet의 역할이 중요
+    ModelViewSet method 정리
     `list(): get',
     `create():post`,
     `retrieve(): get/{id}`,
@@ -25,7 +25,7 @@ class UserViewSet(viewsets.ModelViewSet):
                         mixins.DestroyModelMixin,
                         viewsets.GenericViewSet):
 
-    위와 같이 처리하면, 수정과 삭제의 기능만 갖게된다.
+    위와 같이 처리하면, 조회 ,수정과 삭제의 기능만 갖게된다.
 
     2)
     내가 사용하고 싶은 메소드만 골라서 쓸수 있게해줌
@@ -36,25 +36,36 @@ class UserViewSet(viewsets.ModelViewSet):
     """
     queryset = User.objects.all().order_by('-date_joined')
     """
-    serializer_class : 입력된 값을 validate하거나 deserialize하거나, 
-    출력값을 serialize할 때 사용하는 serializer 클래스. 
-    일반적으로 이 속성을 설정하거나 get_serializer_class()메소드로 override해서 사용해야 함
+    serializer_class : 입력된 값을 validate하거나 deserialize하거나, 출력값을 serialize할 때 사용하는 serializer 클래스. 
+    
+    (오버라이딩)
+    1. serializer_class = UserSerializer
+    
+    (함수형)
+    2. def get_serializer_class(self):
+           return UserSerializer 
     """
 
     serializer_class = UserSerializer
-    # def get_serializer_class(self):
-    #     return UserSerializer
-    # filter_backends = (filters.DjangoFilterBackend,)
-    # filter_fields를 사용하면, swagger상에서 던지는 파라미터를 내가 원하는걸로 수정할 수 있다.
-    # /user?email=tset@asdf.com&username=asdifjaslf
-    # https://www.django-rest-framework.org/api-guide/filtering/ -> Django Filter
-    filter_fields = ('email', 'username',)
-    permission_classes = [permissions.IsAuthenticated]
 
+
+"""
+https://www.django-rest-framework.org/api-guide/filtering/ -> Django Filter
+
+* django filter (filter_fields를 사용하면, swagger상에서 던지는 파라미터를 내가 원하는걸로 수정할 수 있다.)
+    ex - /user?email=tset@asdf.com&username=asdifjaslf 
+    
+   1. filter_fields = ('email', 'username',)
+    
+   2. filterset_class = ProductFilter (필터 클래스를 사용하여 filter_fields를 명시하지 않고 공통적인 옵션을 줄 수 도 있다.)
+"""
+
+    # permission_classes = [permissions.IsAuthenticated]
     # def filter_queryset(self, queryset):
     #     queryset = queryset.filter(**self.kwargs)
     #     queryset = super().filter_queryset(queryset=queryset)
     #     return queryset
+
 
 
 class GroupViewSet(viewsets.ModelViewSet):
@@ -63,8 +74,19 @@ class GroupViewSet(viewsets.ModelViewSet):
     """
     queryset = Group.objects.all()
 
-    # serializer_class를 사용하여 설정하거나, get_serializer_class()를 사용하여 처리
     # serializer_class = GroupSerializer
     def get_serializer_class(self):
         return GroupSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+class ReviewViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows groups to be viewed or edited.
+    """
+    # Review의 Primary key가 'account_alias'이기 때문에 swagger상 pk도 자연스럽게 account_alias로 지정된다.
+    queryset = Reviews.objects.all()
+
+    # serializer_class = GroupSerializer
+    def get_serializer_class(self):
+        return ReviewSerializer
     permission_classes = [permissions.IsAuthenticated]

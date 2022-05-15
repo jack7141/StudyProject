@@ -29,6 +29,7 @@ https://www.google.com/example -> 파일입니다.
 router = routers.DefaultRouter(trailing_slash=False)
 router.register('users', views.UserViewSet)
 router.register('groups', views.GroupViewSet)
+router.register('reviews', views.ReviewViewSet)
 # router.register('', views.UserViewSet)
 # swagger 연결
 schema_view = get_schema_view(
