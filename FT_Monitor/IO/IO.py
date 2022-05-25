@@ -17,7 +17,7 @@ class IO:
 
         @returns
             On Succuess - @return
-                            -  dicti { base_url, }
+                            -  dict { base_url, base_api, }
 
                           @descriptions
                             - 프로젝트 최상위 경로에서 config.ini 파일을 읽어서 변수에 저장합니다
@@ -30,8 +30,8 @@ class IO:
             self.config.read(CONFIG_PATH, encoding='utf-8')
 
             kwrags = {
-                'base_url':self.config['URL_CONF'][self.run_type],
-                'base_api':self.config['API_BASE'][self.base_api],
+                'base_url' : self.config['URL_CONF'][self.run_type],
+                'base_api' : self.config['API_BASE'][self.base_api],
             }
 
         except IOError:
