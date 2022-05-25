@@ -16,11 +16,11 @@ class Unit(object):
 class Tank(Unit):
     def __init__(self, rank, size, life, attack_type):
         super(Tank, self).__init__(rank, size, life)
-        self.attack_type = attack_type
+        # self.attack_type = attack_type
 
     def show_status(self):
         super().show_status()
-        print(f'공격 타입 : {self.attack_type}')
+        # print(f'공격 타입 : {self.attack_type}')
 
 class SiegeTank(Tank):
     def __init__(self, rank, size, life, attack_type, damage, SiegeTank_damage):
@@ -39,9 +39,9 @@ class SiegeTank(Tank):
 """
 tank_1 = Tank('시즈탱크', 'Big', 100, '원거리 공격')
 tank_1.show_status()
-print(Tank.__dict__)
-# print(help(Tank))
-print(help(SiegeTank))
+# print(Tank.__dict__)
+print(help(Tank))
+# print(help(SiegeTank))
 """
 @print
     이름: Tank
