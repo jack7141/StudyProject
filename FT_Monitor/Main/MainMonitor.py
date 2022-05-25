@@ -11,12 +11,15 @@ BASE_DIR = os.path.dirname(os.path.abspath(os.getcwd()))
 SRC_DIR_NAME_Common = "Common"
 SRC_DIR_NAME_Lib = "Lib"
 SRC_DIR_NAME_Main = "Main"
+SRC_DIR_NAME_IO = "IO"
+
 
 Common = os.path.join(BASE_DIR, SRC_DIR_NAME_Common)
 Lib = os.path.join(BASE_DIR, SRC_DIR_NAME_Lib)
 Main = os.path.join(BASE_DIR, SRC_DIR_NAME_Main)
+IO = os.path.join(BASE_DIR, SRC_DIR_NAME_IO)
 
-AppPathList = [BASE_DIR, Common, Lib, Main]
+AppPathList = [BASE_DIR, Common, Lib, Main, IO]
 
 add_path = [sys.path.append(p) for p in AppPathList]
 
@@ -37,6 +40,8 @@ def arguments_entryPoint():
     # [Command Parameter 설정]
     # arguments 설정
     modeList = [ConstVar.run_type_local, ConstVar.run_type_dev, ConstVar.run_type_opr, ConstVar.run_type_kb]
+    api_list = ['accounts', ]
+
     title = 'Account'
 
     parser = argparse.ArgumentParser(prog="FOUNT API Monitor",
@@ -56,11 +61,22 @@ def arguments_entryPoint():
                         required=True,
                         choices=modeList,
                         metavar='',
-                        dest="mode")
+                        dest="run_type")
 
-    mode = UtilLib.removeSideBlank(parser.parse_args().mode)
+    parser.add_argument("-u",
+                        "--url",
+                        type=str,
+                        help="'{accounts}' (Account API)".format(
+                            accounts = 'accounts',
+                        ),
+                        required=True,
+                        choices=api_list,
+                        metavar='',
+                        dest="base_api")
 
-    return mode
+
+    # mode = UtilLib.removeSideBlank(parser.parse_args().mode)
+    return parser.parse_args()
 
 if __name__ == "__main__":
     # [FOUNT Monitor Entry Point]
@@ -72,19 +88,23 @@ if __name__ == "__main__":
     # ------------------------------------------------------------------------------------------------------------------
 
     # params, Token을 여기서 받고싶은데..
-    mode = arguments_entryPoint()
-    mc_object = mc()
-    if mode == ConstVar.run_type_local:
-        mc_object.running(run_type=ConstVar.run_type_local)
-
-    elif mode == ConstVar.run_type_dev:
-        mc_object.running(run_type=ConstVar.run_type_dev)
-
-    elif mode == ConstVar.run_type_opr:
-        mc_object.running(run_type=ConstVar.run_type_opr)
-
-    else:
-        mc_object.running(run_type=ConstVar.run_type_kb)
+    base_api = arguments_entryPoint().base_api
+    run_type = arguments_entryPoint().run_type
+    print(run_type)
+    print(base_api)
+    mc_object = mc(run_type=run_type, base_api=base_api)
+    mc_object.running()
+    # if mode == ConstVar.run_type_local:
+    #     mc_object.running(run_type=ConstVar.run_type_local)
+    #
+    # elif mode == ConstVar.run_type_dev:
+    #     mc_object.running(run_type=ConstVar.run_type_dev)
+    #
+    # elif mode == ConstVar.run_type_opr:
+    #     mc_object.running(run_type=ConstVar.run_type_opr)
+    #
+    # else:
+    #     mc_object.running(run_type=ConstVar.run_type_kb)
 
     # ------------------------------------------------------------------------------------------------------------------
     print("#" * 50)

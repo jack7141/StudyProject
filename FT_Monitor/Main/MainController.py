@@ -1,20 +1,20 @@
 import UtilLib
 from Common.Status import Status
 from Common.ConstVar import *
+from IO.IO import IO
 import Lib.UtilLib
 import configparser
 import requests
 
 
 class MainController:
-    def __init__(self):
+    def __init__(self, run_type=None, base_api=None):
         """initalize Monitoring object."""
         self.config = configparser.ConfigParser()
-        self.run_type = None
-        self.base_url = None
-        self.token = None
+        self.run_type = run_type
+        self.base_api = base_api
 
-    def running(self, run_type=None):
+    def running(self):
         """ Monitoring Process 시작 """
         # KB_TR인 경우 토큰 필요 없고 바로 GET요청을 통해서 데이터 읽어올 수 있음
 
@@ -26,22 +26,25 @@ class MainController:
             - /accounts/{계좌번호}/trades - 해외 거래내역
         """
         # config 파일 read
-        self._read_config(run_type)
+        io = IO(run_type=self.run_type, base_api=self.base_api)
+        BASE_URL = io.read_config.get('base_url')
+        API_URL = io.read_config.get('base_api')
+        # run_type으로 클래스 분기
 
-        header = {
-            # Token값 변수로 받기
-            'Content-Type' : 'application/json',
-            'Authorization': f'Token {self.token}'
-        }
-
-        params = {
-            # 변수로 받기
-            'account_alias' : '20220517030650032658',
-        }
+        # header = {
+        #     # Token값 변수로 받기
+        #     'Content-Type' : 'application/json',
+        #     'Authorization': f'Token {self.token}'
+        # }
+        #
+        # params = {
+        #     # 변수로 받기
+        #     'account_alias' : '20220517030650032658',
+        # }
 
         # response = requests.get(self.base_url+'/accounts/amounts', params=params, headers=header)
-        response = requests.get(self.base_url+'/accounts/33911840901/assets')
-        if response.status_code is not 200:
+        response = requests.get(BASE_URL+API_URL+'/33911840901/assets')
+        if response.status_code != 200:
             print("#{:>49}".format("#"))
             print(f'#\t   {response.status_code} response 응답 에러'"{:>17}".format("#"))
             print("#{:>49}".format("#"))
@@ -63,26 +66,7 @@ class MainController:
 
 
 
-    def _read_config(self, run_type) -> bool:
-        """
-        * config.ini 파일을 읽어서 변수에 할당 합니다.
-        @returns
-            On Succuess - true
-                         @descriptions
-                            - 프로젝트 최상위 경로에서 config.ini 파일을 읽어서 변수에 저장합니다
-            On Failure - false
-                        @descriptions
-                            - config.ini이 없거나, config.ini 파일 내 해당 변수가 없을 시 에러 발생
-        """
-        try:
-            self.config.read(CONFIG_PATH, encoding='utf-8')
-            self.base_url = self.config['URL_CONF'][run_type]
-            self.token = self.config['Header']['token']
 
-        except IOError:
-            return Status.FAIL
-
-        return Status.SUCCESS
 
     def _config_generator(self):
 
