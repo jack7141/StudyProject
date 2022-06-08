@@ -24,8 +24,8 @@ def task(name):
     logging.info("서브 스레드 %s: 시작", name)
 
     result = 0
-    for i in range(10000):
-        result = result + i
+    for i in range(10):
+        result += i
 
     logging.info('서브 스레드 %s: 끝 result: %d', name, result)
 
