@@ -69,6 +69,7 @@ if __name__ == "__main__":
 
     logging.info(f"Test Start - {store.value}")
 
+    # 효율적인 max_worker의 값 선정기준은??
     with ThreadPoolExecutor(max_workers=2) as excutor:
         for n in ["First", "Second", "Third", "four"]:
             excutor.submit(store.update, n)
