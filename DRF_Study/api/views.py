@@ -1,6 +1,8 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
 from rest_framework import permissions
+from rest_framework import status
+from rest_framework.serializers import Serializer
 from .serializers import UserSerializer, GroupSerializer, ProductFilter, ReviewSerializer
 from .models import Reviews
 from rest_framework.response import Response
@@ -90,3 +92,20 @@ class ReviewViewSet(viewsets.ModelViewSet):
     def get_serializer_class(self):
         return ReviewSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+
+class StatusViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    API endpoint that allows groups to be viewed or edited.
+    """
+
+    permission_classes = [permissions.AllowAny]
+    serializer_class = None
+    # def get_serializer_class(self):
+    #     return ReviewSerializer
+    # def get_serializer_class(self):
+    #     return None
+
+    def status(self, request, *args, **kwargs):
+        return Response(status=status.HTTP_200_OK)
+

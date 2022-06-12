@@ -30,6 +30,11 @@ router = routers.DefaultRouter(trailing_slash=False)
 router.register('users', views.UserViewSet)
 router.register('groups', views.GroupViewSet)
 router.register('reviews', views.ReviewViewSet)
+
+# FIXME: 왜 라우터로는 안되지?
+# router.register('status', views.StatusViewSet.as_view({'get': 'status'}), basename="status")
+
+
 # router.register('', views.UserViewSet)
 # swagger 연결
 schema_view = get_schema_view(
@@ -47,6 +52,7 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('status/', views.StatusViewSet.as_view({'get': 'status'})),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     path("swagger/", schema_view.with_ui('swagger', cache_timeout=0), name='swagger'),
     path('admin/', admin.site.urls),
