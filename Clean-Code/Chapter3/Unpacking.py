@@ -34,5 +34,6 @@ def users_from_rows(dbrows) -> list:
     ]
 
 if __name__ == "__main__":
+    print(USER)
     test_ = users_from_rows(USER)
     print(test_)
