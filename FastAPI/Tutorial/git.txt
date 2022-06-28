@@ -1,2 +1,0 @@
-source code 주소
-- https://github.com/jack7141/FastApi
