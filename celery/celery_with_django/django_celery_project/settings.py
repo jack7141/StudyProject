@@ -135,6 +135,7 @@ CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'Asia/Seoul'
 
+# 결과가 DB에 저장되고, admin에서 확인이 가능함
 CELERY_RESULT_BACKEND = 'django-db'
 
 #CELERY BEAT

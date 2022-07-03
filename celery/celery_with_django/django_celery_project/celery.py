@@ -15,13 +15,19 @@ app.conf.update(timezone='Asia/Seoul')
 app.config_from_object(settings, namespace='CELERY')
 
 # Celery Beat Settings
-# app.conf.beat_schedule = {
-#     'send-mail-every-day-at-8': {
-#         'task': 'send_mail_app.tasks.send_mail_func',
-#         'schedule': crontab(hour=0, minute=46, day_of_month=19, month_of_year=6),
-#         # 'args': (2,)
-#     }
-# }
+app.conf.beat_schedule = {
+    # periodic task Name
+    'send-mail-every-day-at-8': {
+        # 실행할 업무 appname.task file name.함수명
+        'task': 'mainapp.tasks.test_func',
+        # 크론탭 설정
+        # https://lucky516.tistory.com/18
+        'schedule': crontab(),
+        # 'schedule': crontab(hour=11, minute=16),
+        # 'schedule': crontab(hour=0, minute=1, day_of_month=19, month_of_year=6),
+        # 'args': (2,)
+    }
+}
 
 # Celery Schedules - https://docs.celeryproject.org/en/stable/reference/celery.schedules.html
 
