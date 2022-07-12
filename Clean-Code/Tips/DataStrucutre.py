@@ -1,5 +1,5 @@
 """python 3.9 이상부터 가능"""
-
+# 출처 - https://www.youtube.com/shorts/VLBERpAEzew
 from dataclasses import dataclass
 
 @dataclass
@@ -7,7 +7,8 @@ class Customer:
     name: str
     email: str
     active: bool
-
+    
+# Customer 데이터클래스를 사용하여, object를 찾는 방법
 CUSTOMERS: dict[str, Customer] = {}
 
 
