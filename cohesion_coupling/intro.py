@@ -48,15 +48,16 @@ class Application:
             tax_percentage = 0.02
 
         payable_tax = tax_percentage * catalogue_price
-
+        logger.info(f"============================================")
         logger.info(f"Registration complete. Vehicle Information:")
         logger.info(f"Brand: {brand}")
         logger.info(f"Id: {vehicle_id}")
         logger.info(f"License plate: {license_plate}")
         logger.info(f"Payable tax: {payable_tax}")
+        logger.info(f"============================================")
 
 if __name__ == '__main__':
     logging.basicConfig(format='[%(asctime)s-%(levelname)s] %(message)s',
                         level=logging.INFO)
     app = Application()
-    app.register_vehicle('lambo')
+    app.register_vehicle('BMW 5')
