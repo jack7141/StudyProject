@@ -1,9 +1,9 @@
-from Architecture.Facade.Brake import Brake
-from Architecture.Facade.Engine import Engine
-from Architecture.Facade.Frame import Frame
-from Architecture.Facade.Suspension import Suspension
-from Architecture.Facade.Transmission import Transmission
-from Architecture.Facade.WheelAssembly import WheelAssembly
+from DesignPatterns.facade_pattern.Brake import Brake
+from DesignPatterns.facade_pattern.Engine import Engine
+from DesignPatterns.facade_pattern.Frame import Frame
+from DesignPatterns.facade_pattern.Suspension import Suspension
+from DesignPatterns.facade_pattern.Transmission import Transmission
+from DesignPatterns.facade_pattern.WheelAssembly import WheelAssembly
 
 
 class Car(object):

@@ -1,5 +1,6 @@
 from abc import ABCMeta, abstractmethod
 
+
 class Employee(metaclass=ABCMeta):
     def __init__(self, name, age, gender):
         self.name = name

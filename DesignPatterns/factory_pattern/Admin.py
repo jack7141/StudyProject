@@ -1,5 +1,6 @@
 from .Employee import Employee
-class Engineer(Employee):
 
+
+class Admin(Employee):
     def get_role(self):
-        return 'engineering'
+        return 'administration'

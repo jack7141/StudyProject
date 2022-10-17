@@ -1,7 +1,7 @@
 from Architecture.Proxy.EmployeeProxy import EmployeeProxy
-from Architecture.Factory.Engineer import Engineer
-from Architecture.Factory.Accountant import Accountant
-from Architecture.Factory.Admin import Admin
+from DesignPatterns.factory_pattern import Engineer
+from DesignPatterns.factory_pattern import Accountant
+from DesignPatterns.factory_pattern import Admin
 class EmployeeProxyFactory(object):
     """인스턴스 카운트 프록시를 위한 Employee 팩토리 클래스"""
     
