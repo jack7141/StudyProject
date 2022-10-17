@@ -28,3 +28,6 @@ if __name__ == '__main__':
     r1 = DateRangeContainerIterable(date(2019, 1, 30), date(2019, 2, 5))
     print(", ".join(map(str, r1)))
     print(max(r1))
+
+    for day in DateRangeContainerIterable(date(2019, 1, 30), date(2019, 2, 5)):
+        print(day)

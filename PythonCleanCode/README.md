@@ -1,5 +1,6 @@
 # 프로젝트 설명
-* make_iterable_object: 이터러블 객체 만들기(P.51)
+* make_iterable: 이터러블 객체 만들기(P.51 -> 'iter  매직 메서드', 'next  매직 메서드' 활용)
+* make_sequence : 시퀀스 만들기(P.55 -> 'getitem 매직 메서드' 활용)
 
 
 
