@@ -31,7 +31,7 @@ def producer(queue, event):
 def consumer(queue, event):
     """소비자(증답 받고 소비하는 것으로 가정"""
     while not event.is_set() or not queue.empty():
-        message = queue.get(message)
+        message = queue.get()
         logging.info(f"consumer storing message: {message}, {queue.qsize()}")
     logging.info(f"consumer recevied event exit")
 
@@ -49,14 +49,18 @@ if __name__ == "__main__":
     # 이벤트 플래그 초기 값 0
     event = threading.Event()
 
-    with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:
-        executor.submit(producer, pipline, event)
-        executor.submit(consumer, pipline, event)
+    while True:
+        with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:
+            executor.submit(producer, pipline, event)
+            executor.submit(consumer, pipline, event)
 
-    time.sleep(1)
+            time.sleep(5)
 
-    logging.info('set Event')
+            logging.info('set Event')
 
-    # 프로그램 종료
-    event.set()
+            # 프로그램 종료
+            event.set()
+            if event.is_set() > 0:
+                logging.info("FIN EveryThings")
+                break
 

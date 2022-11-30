@@ -30,6 +30,7 @@ def producer(queue, event):
         message = random.randint(1, 11)
         logging.info(f"생산자 - {message}")
         queue.put(message)
+
     logging.info(f"생산자 끝")
 
 def consumer(queue, event):
