@@ -66,7 +66,7 @@ def main():
 
     # 실행방법 2
     # with를 사용하여 라이프사이클 관리
-    with ThreadPoolExecutor(max_workers=3) as excutor:
+    with ThreadPoolExecutor(max_workers=10) as excutor:
         tasks = excutor.map(task, ['first', 'Second'])
         print(list(tasks))
 

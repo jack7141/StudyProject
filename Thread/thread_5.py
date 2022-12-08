@@ -56,13 +56,15 @@ if __name__ == "__main__":
 
     # 2개의 스레드를 만들고 각각의 스레드는 pipline을 통해서 통신한다.
     with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:
-        executor.submit(producer, pipline, event)
-        executor.submit(consumer, pipline, event)
+        executor.submit(producer, pipline, event)# send
+        executor.submit(consumer, pipline, event)# recv
 
         # 실행시간 조정
         # while True:
         time.sleep(5)
         logging.info("Main: about to set event")
         event.set()
+
+    print('all stop')
 
 

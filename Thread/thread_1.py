@@ -3,27 +3,12 @@ import threading
 import time
 
 
-
-
-
-
-
 # 스레드 함수 생성
 def thread_function(name):
     """서브 스레드"""
     logging.info("서브 스레드 %s: 시작", name)
     time.sleep(5)
     logging.info("서브 스레드 %s: 끝", name)
-
-
-
-
-
-
-
-
-
-
 
 
 if __name__ == "__main__":

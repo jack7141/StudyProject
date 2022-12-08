@@ -3,9 +3,6 @@ import threading
 from concurrent.futures import ThreadPoolExecutor
 import time
 
-
-
-
 """
 * Multithreading
 - Lock, DeadLock, Race Condition, Thread synchronization
