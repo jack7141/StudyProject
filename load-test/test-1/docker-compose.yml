@@ -2,33 +2,37 @@ version: "2.0"
 
 services:
   mci-test-0:
-    image: mci-test
+    build:
+      context: .
+      dockerfile: Dockerfile
     volumes:
-      - ./locustfile-0.py:/usr/src/app/locustfile.py      
+      - ./locustfile-0.py:/usr/src/app/test.py
     ports:
       - "9000:8089"
-    command: locust --host http://172.16.0.253:8080 --users 4 --spawn-rate 4
+    command: locust -f test --host http://172.16.0.253:8080 --users 4 --spawn-rate 4
 
   mci-test-1:
-    image: mci-test
+    build:
+      context: .
+      dockerfile: Dockerfile
     volumes:
-      - ./locustfile-1.py:/usr/src/app/locustfile.py
+      - ./locustfile-1.py:/usr/src/app/test.py
     ports:
       - "9001:8089"
-    command: locust --host http://172.16.0.253:8081 --users 4 --spawn-rate 4
-
-  mci-test-2:
-    image: mci-test
-    volumes:
-      - ./locustfile-2.py:/usr/src/app/locustfile.py
-    ports:
-      - "9002:8089"
-    command: locust --host http://172.16.0.253:8082 --users 4 --spawn-rate 4
-
-  mci-test-3:
-    image: mci-test
-    volumes:
-      - ./locustfile-3.py:/usr/src/app/locustfile.py
-    ports:
-      - "9003:8089"
-    command: locust --host http://172.16.0.253:8083 --users 4 --spawn-rate 4
+    command: locust -f test --host http://172.16.0.253:8081 --users 4 --spawn-rate 4
+#
+#  mci-test-2:
+#    image: mci-test
+#    volumes:
+#      - ./locustfile-2.py:/usr/src/app/test.py
+#    ports:
+#      - "9002:8089"
+#    command: locust --host http://172.16.0.253:8082 --users 4 --spawn-rate 4
+#
+#  mci-test-3:
+#    image: mci-test
+#    volumes:
+#      - ./locustfile-3.py:/usr/src/app/test.py
+#    ports:
+#      - "9003:8089"
+#    command: locust --host http://172.16.0.253:8083 --users 4 --spawn-rate 4
