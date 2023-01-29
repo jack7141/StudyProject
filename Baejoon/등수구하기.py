@@ -6,20 +6,20 @@ from itertools import permutations
 
 
 
-def solution(grade):
-    answer = []
-    for i in range(0, len(grade)):
-        r = 1
-        for j in range(0, len(grade)):
-            if grade[i] < grade[j]:
-                r += 1
-        answer.append(r)
+def solution(k, m, score):
+    score = sorted(score, reverse=True)
+    answer = 0
+    for i in range(0, len(score), m):
+        tmp = score[i:i+m]
+        if len(tmp) == m:
+            answer += min(tmp) * m
+
     return answer
 
-grade = [2,2,1]
-# grade = [3,2,1,2]
+k = 3
+m = 4
+score = [1, 2, 3, 1, 2, 3, 1]
 
 
 if __name__ == "__main__":
-    # print(solution(a, b, budget))
-    print(solution(grade))
+    print(solution(k, m, score))
