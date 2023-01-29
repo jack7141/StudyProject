@@ -1,14 +1,25 @@
+from itertools import permutations
 
-k = 3
-m = 4
-score = [1, 2, 3, 1, 2, 3, 1]
-def solution(k, m, score):
-    answer = 0
+"""
+리스트에서 각각의 점수를 통해서 등수를 구하는 방법
+"""
+
+
+
+def solution(grade):
+    answer = []
+    for i in range(0, len(grade)):
+        r = 1
+        for j in range(0, len(grade)):
+            if grade[i] < grade[j]:
+                r += 1
+        answer.append(r)
     return answer
+
+grade = [2,2,1]
+# grade = [3,2,1,2]
 
 
 if __name__ == "__main__":
-    # Loggin 포멧 설정
-    format = "%(asctime)s : %(message)s"
-    logging.basicConfig(format=format, level=logging.INFO, datefmt="%H:%M:%S")
-    print(solution(number, limit, power))
+    # print(solution(a, b, budget))
+    print(solution(grade))
