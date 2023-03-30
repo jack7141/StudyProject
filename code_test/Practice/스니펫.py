@@ -36,3 +36,11 @@ def solution(numbers):
     n = sorted(n, key=functools.cmp_to_key(comparator),reverse=True)
     answer = str(int(''.join(n)))
     return answer
+
+# 제곱근 판별 함수
+def nextSqure(n):
+    sqrt = n ** (1/2)
+
+    if sqrt % 1 == 0:
+        return (sqrt + 1) ** 2
+    return -1

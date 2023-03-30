@@ -1,0 +1,56 @@
+1) A_info, B_info테이블의 모든 사업자번호를 리스트업 하시오. (유효한 사업자 번호만, 중복 사업자는 1번만)
+[solution]
+SELECT MediaID, CorpNo FROM a_info
+WHERE not CorpNo = "0"
+UNION
+SELECT MediaID, CorpNo FROM b_info
+WHERE not CorpNo = "0"
+
+
+2) 사업자번호별 A매체 평균, B매체 평균, 담당자 사번을 구하시오. (담당자가 여러명 일 경우 ,(콤마)로 연결하여 한 문자열로 표시할 것)
+solution :
+[solution]
+SELECT
+    a_info.CorpNo AS 'Company Number',
+    AVG(IF(total_pay.MediaID = 'A', total_pay.AdAmt, NULL)) AS 'Ad Cost (Media A)',
+    AVG(IF(total_pay.MediaID = 'B', total_pay.AdAmt, NULL)) AS 'Ad Cost (Media B)',
+    GROUP_CONCAT(DISTINCT agent_info.Name SEPARATOR ', ') AS 'Agent Name'
+FROM
+    a_info
+    INNER JOIN total_pay ON a_info.CorpNo = total_pay.CorpNo
+    INNER JOIN agent_info ON a_info.AgentID = agent_info.AgentID
+GROUP BY
+    a_info.CorpNo;
+
+3) 2023년 1월 매출금액이 있는 사업자번호의 2022년도 총매출과 월별 평균 매출을 구하시오(월 매출 평균은 월 매출이 있는 월만 계산할 것)
+solution :
+[solution]
+SELECT
+    CorpNo,
+    SUM(IF(SaleMonth='202301', AdAmt, 0)) AS 'Jan2023',
+    SUM(IF(SaleMonth LIKE '2022%', AdAmt, 0)) AS 'Total2022',
+    AVG(IF(SaleMonth LIKE '2022%', AdAmt, NULL)) AS 'Avg2022'
+FROM
+    total_pay
+GROUP BY
+    CorpNo
+
+
+4) 부서별로 2022년도 총매출을 구하고, 각 부서별 최고 매출을 달성한 담당자 이름을 구하시오(부서 총매출이 높은 순서로 정렬할 것)
+solution :
+[solution]
+SELECT
+    a.OrgCD AS 'Division',
+    SUM(IF(t.SaleMonth LIKE '2022%', t.AdAmt, 0)) AS 'Sales in 2022',
+    MAX(a.Name) AS 'Top Saler'
+FROM
+    total_pay t
+INNER JOIN
+    a_info ai ON t.MediaID = ai.MediaID AND t.CorpNo = ai.CorpNo
+INNER JOIN
+    agent_info a ON ai.AgentID = a.AgentID
+WHERE
+    t.SaleMonth LIKE '2022%'
+GROUP BY
+    a.OrgCD
+
